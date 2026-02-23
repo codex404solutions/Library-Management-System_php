@@ -87,7 +87,7 @@ if not exist ".github\CODEOWNERS" (
     mkdir .github 2>nul
     (
         echo # Code owners for this repository
-        echo * @CodeX404lab/core-reviewers
+        echo * @CodeX404Solutions/core-reviewers
     ) > .github\CODEOWNERS
     echo [OK] CODEOWNERS file created
 ) else (

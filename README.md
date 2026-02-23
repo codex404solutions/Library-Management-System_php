@@ -352,7 +352,7 @@ Students can search and borrow books, track issued books, and receive updates.
 1. Install **XAMPP/WAMP**.  
 2. Clone the repository inside the `htdocs` folder:  
    ```bash
-   git clone https://github.com/CodeX404lab/Library-Management-System_php.git
+   git clone https://github.com/codex404solutions/Library-Management-System_php.git
 
 3. Import the database:
    - Open phpMyAdmin.
