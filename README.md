@@ -182,6 +182,9 @@ This system helps to efficiently manage library operations like **book managemen
 │   │   ├── return_books.php
 │   │   └── send_notification_student.php
 │   ├── login.html
+│   ├── logo
+│   │   ├── logo.jpg
+│   │   └── logo.png
 │   ├── model
 │   │   ├── config.php
 │   │   └── library.php
