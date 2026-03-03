@@ -33,7 +33,11 @@ This system helps to efficiently manage library operations like **book managemen
 │   ├── blank.html
 │   ├── cards.html
 │   ├── charts.html
+│   ├── config
+│   │   └── config.php
 │   ├── connection
+│   │   └── connection.php
+│   ├── connection copy
 │   │   └── connection.php
 │   ├── contacts.php
 │   ├── courses.php
