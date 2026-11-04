@@ -1,0 +1,3 @@
+-- Initial Baseline Migration for lms
+-- CodeX404 Solutions Database Automation
+-- Baseline tables are loaded from database/schema.sql upon fresh setup.

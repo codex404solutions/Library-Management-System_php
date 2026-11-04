@@ -1,0 +1,56 @@
+name: Database Schema Validation & Migration Test
+
+on:
+  push:
+    branches: [ main, dev ]
+    paths:
+      - '**/database/**'
+      - '.github/workflows/db-migrate.yml'
+  pull_request:
+    branches: [ main, dev ]
+  workflow_dispatch:
+
+jobs:
+  validate-and-migrate:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: 'lms'
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: pdo, pdo_mysql, mysqli
+
+      - name: Run Database Auto-Setup & Migrations
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: root
+          DB_PASS: ''
+          DB_NAME: 'lms'
+        run: |
+          chmod +x ./setup.sh 2>/dev/null || true
+          ./setup.sh || php "librarymanagement/database/migrate.php"
+
+      - name: Verify Migration Status
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USER: root
+          DB_PASS: ''
+          DB_NAME: 'lms'
+        run: |
+          php "librarymanagement/database/migrate.php" --status
