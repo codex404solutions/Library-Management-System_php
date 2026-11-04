@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 include("connection/connection.php");
 ?>
 <!DOCTYPE html>
