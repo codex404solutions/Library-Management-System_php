@@ -81,7 +81,7 @@
  <div class="premium-footer">
    <div class="footer-bottom">
      <p>© <?= date("Y") ?> <strong>First Alphabet</strong>. All Rights Reserved.</p>
-     <p>Developed with ❤️ by <a href="https://codex404solutions.imaan360.online/" target="_blank" class="dev-logo-link">
+     <p>Developed with ❤️ by <a href="https://codex404solutions.com/" target="_blank" class="dev-logo-link">
          <img src="<?= BASE_URL ?>logo/logo.png" alt="CodeX404 Solutions Logo" class="dev-logo">
        </a>
      </p>
