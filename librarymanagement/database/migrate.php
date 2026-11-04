@@ -349,7 +349,17 @@ try {
                     $q = $pdo->query($sTrim);
                     if ($q) $q->closeCursor();
                 } else {
-                    $pdo->exec($sTrim);
+                    try {
+                        $pdo->exec($sTrim);
+                    } catch (PDOException $ex) {
+                        $errorCode = (int)($ex->errorInfo[1] ?? 0);
+                        // 1060: Duplicate column name, 1061: Duplicate key name, 1050: Table already exists, 1062: Duplicate entry
+                        if (in_array($errorCode, [1060, 1061, 1050, 1062])) {
+                            output("Notice: " . ($ex->errorInfo[2] ?? $ex->getMessage()) . " (Continuing safely)", 'warn');
+                        } else {
+                            throw $ex;
+                        }
+                    }
                 }
             }
         } elseif (str_ends_with($mf, '.php')) {
@@ -382,8 +392,8 @@ try {
         $dump .= "SET FOREIGN_KEY_CHECKS=0;\n\n";
         foreach ($allTables as $t) {
             $createStmt = $pdo->query("SHOW CREATE TABLE `{$t}`")->fetch();
-            $dump .= "DROP TABLE IF EXISTS `{$t}`;\n";
-            $dump .= $createStmt['Create Table'] . ";\n\n";
+            $sql = preg_replace('/^CREATE\s+TABLE\s+/i', 'CREATE TABLE IF NOT EXISTS ', $createStmt['Create Table']);
+            $dump .= $sql . ";\n\n";
         }
         $dump .= "SET FOREIGN_KEY_CHECKS=1;\n";
         file_put_contents($dbDir . '/schema.sql', $dump);
